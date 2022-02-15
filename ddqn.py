@@ -115,7 +115,7 @@ class Agent:
         # ------------------- update target network ------------------- #
         if self.timestep % self.should_be_updated == 0:
             for target_param, local_param in zip(self.target_network.parameters(), self.network.parameters()):
-                target_param.data.copy_(self.tau * local_param.data + (1.0 - self.tau) * target_param.data)  
+                target_param.data.copy_(local_param.data)  
 
         # ----------------------- decay epsilon ------------------------ #       
         if self.epsilon > self.epsilon_min:
@@ -138,7 +138,7 @@ class Agent:
             return action    
         
     def checkpoint(self, filename):
-        torch.save(self.q_network.state_dict(), filename)
+        torch.save(self.network.state_dict(), filename)
 
 
 

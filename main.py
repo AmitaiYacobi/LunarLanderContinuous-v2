@@ -85,14 +85,16 @@ for episode in range(num_of_episodes):
     is_solved = np.mean(rewards[-100:])
     if is_solved >= 200:
         agent.checkpoint('solved_200.pth')
-        print("Enviroment solved!")
+        print("\n")
+        print(f"Enviroment solved in {episode} episodes!")
         break
     if episode % 100 == 0 and episode != 0: 
-        print(f"Average over last 100 episode: {is_solved}")
+        print(f"Average score in episode {episode} is: {is_solved}")
 
 plt.xlabel("Number Episode")
 plt.ylabel("Score Per Episode")
 plt.plot([i + 1 for i in range(0, len(rewards), 2)], rewards[::2])
+plt.savefig("ddqn")
 plt.show()
 
         

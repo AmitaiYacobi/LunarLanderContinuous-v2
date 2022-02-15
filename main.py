@@ -1,35 +1,14 @@
 import io
-import sys
 import gym
-import time
 import glob
-import copy
-import torch
 import base64
-import random
-import itertools
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
-import torch
-import torch.autograd
-import torch.nn as nn
-import torch.optim as optim
-import torch.nn.functional as F
-import torchvision.transforms as T
-
 from ddqn import *
-from operator import itemgetter
 from gym.wrappers import Monitor
 from IPython.display import HTML
-from torch.autograd import Variable
-from pyvirtualdisplay import Display
-from collections import namedtuple, deque
-from torch.distributions import Categorical
 from IPython import display as ipythondisplay
-from torch.distributions import MultivariateNormal
-from collections import deque, defaultdict, namedtuple
 
 
 
@@ -91,8 +70,8 @@ for episode in range(num_of_episodes):
     if episode % 100 == 0 and episode != 0: 
         print(f"Average score in episode {episode} is: {is_solved}")
 
-plt.xlabel("Number Episode")
-plt.ylabel("Score Per Episode")
+plt.xlabel("Episodes")
+plt.ylabel("Rewards")
 plt.plot([i + 1 for i in range(0, len(rewards), 2)], rewards[::2])
 plt.savefig("ddqn")
 plt.show()

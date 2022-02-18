@@ -43,7 +43,8 @@ class DDQNAgent:
 
     def learn(self, experiences):
         states, actions, rewards, next_states, dones = experiences
-        # Get max indicies from Q local network, then max predicted Q values (for next states) from target model
+        # Get max indicies of the output that was created by the online network on next states, 
+        # then choose the actions from target output by those indices. This is actually how DDQN works.
         chosen_actions_for_next_states = self.online_network(next_states).detach().max(1)[1].unsqueeze(1)
         targets_for_next_states = self.target_network(next_states).detach().gather(1,chosen_actions_for_next_states)
         

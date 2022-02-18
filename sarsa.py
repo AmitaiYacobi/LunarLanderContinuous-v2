@@ -7,17 +7,18 @@ import matplotlib.pyplot as plt
 from discritization import *
 
 
-
-class SARSAGENT:
+class SARSAgent:
     def state_discritization(self, state):
         new_state = (min(2, max(-2, int((state[0]) / 0.05))), \
-                min(2, max(-1, int((state[1]) / 0.1))), \
-                min(1, max(-1, int((state[2]) / 0.1))), \
-                min(1, max(-1, int((state[3]) / 0.1))), \
-                min(1, max(-1, int((state[4]) / 0.1))), \
-                min(1, max(-1, int((state[5]) / 0.1))), \
-                int(state[6]), \
-                int(state[7]))
+                     min(2, max(-1, int((state[1]) / 0.1))), \
+                     min(1, max(-1, int((state[2]) / 0.1))), \
+                     min(1, max(-1, int((state[3]) / 0.1))), \
+                     min(1, max(-1, int((state[4]) / 0.1))), \
+                     min(1, max(-1, int((state[5]) / 0.1))), \
+                     int(state[6]), \
+                     int(state[7])
+                    )
+
         return new_state
 
     def alpha(self, it):
@@ -52,20 +53,18 @@ class SARSAGENT:
 
         for episode in range(num_episodes):
             total_reward = 0
-            steps = 0
             max_steps = 1000
             alpha = self.alpha(episode)
             state = env.reset()
             discrete_state = self.state_discritization(state)
             action = self.policy_explorer(discrete_state, Q, episode)
-
             for _ in range(max_steps):
                 state_action = self.state_action_key(discrete_state, action)
                 next_state, reward, done, info = env.step(discrete_actions[action])
 
                 discrete_next_state = self.state_discritization(next_state)
-                action_according_to_policy = self.policy_explorer(discrete_next_state, Q, episode)
-                next_state_action = self.state_action_key(discrete_next_state, action_according_to_policy)
+                next_action_according_to_policy = self.policy_explorer(discrete_next_state, Q, episode)
+                next_state_action = self.state_action_key(discrete_next_state, next_action_according_to_policy)
 
                 # sarsa update rule
                 if not done:
@@ -74,7 +73,7 @@ class SARSAGENT:
                     Q[state_action] += alpha * (reward - Q[state_action])
 
                 discrete_state = discrete_next_state
-                action = action_according_to_policy
+                action = next_action_according_to_policy
                 total_reward += reward
 
                 if render and episode % batch == 0:

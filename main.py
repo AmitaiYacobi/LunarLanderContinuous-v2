@@ -48,7 +48,7 @@ if __name__ == "__main__":
   plt.ylabel("Rewards")
   plt.plot([i + 1 for i in range(0, len(rewards), 2)], rewards[::2])
   plt.show()
-  plt.savefig(args.agent.upper()+'.png')
+  plt.savefig(args.agent.upper())
 
         
 

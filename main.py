@@ -2,12 +2,13 @@ import gym
 import argparse
 import matplotlib.pyplot as plt
 
-from dqn import *
-from ddqn import *
+
 from utils import *
-from sarsa import *
-from targetdqn import *
+from agents.dqn import *
+from agents.ddqn import *
+from agents.sarsa import *
 from discritization import *
+from agents.targetdqn import *
 
 algorithms_dictionary = {
   "sarsa": SARSAgent,

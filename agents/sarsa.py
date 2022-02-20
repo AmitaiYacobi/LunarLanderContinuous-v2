@@ -9,7 +9,8 @@ from discritization import *
 
 class SARSAgent:
     def state_discritization(self, state):
-        new_state = (min(2, max(-2, int((state[0]) / 0.05))), \
+        new_state = (
+                     min(2, max(-2, int((state[0]) / 0.05))), \
                      min(2, max(-1, int((state[1]) / 0.1))), \
                      min(1, max(-1, int((state[2]) / 0.1))), \
                      min(1, max(-1, int((state[3]) / 0.1))), \

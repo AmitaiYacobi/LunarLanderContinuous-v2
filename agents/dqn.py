@@ -86,6 +86,7 @@ class DQNAgent:
 
     def solve(self, env, num_of_episodes=1000):
         rewards = []
+        is_finished = False
         for episode in range(num_of_episodes):
             state = env.reset()
             score = 0
@@ -100,14 +101,43 @@ class DQNAgent:
                 if done:
                     print(f"Episode: {episode}/{num_of_episodes}, score: {score}", end="\r")
                     break
-            rewards.append(score)
-            is_solved = np.mean(rewards[-100:])
-            if is_solved >= 200:
-                self.checkpoint('solved_200.pth')
+            
+            if score >= 200:
                 print("\n")
-                print(f"Enviroment solved in {episode} episodes!")
-                break
+                print("################################################################")
+                print("Current score is 200! let's try 100 episodes to see if we are done!")
+                print("################################################################")
+                rewards_over_100 = []
+                for e in range(100):
+                    state = env.reset()
+                    temp_score = 0
+                    for _ in range(max_steps):
+                        action = self.act(state) # returns index of an action
+                        next_state, reward, done, _ = env.step(discrete_actions[action])
+                        env.render()
+                        state = next_state
+                        temp_score += reward
+                        if done:
+                            print(f"Episode: {e}/100, score: {temp_score}", end="\r")
+                            break
+                    rewards_over_100.append(temp_score)
+
+                result = np.mean(rewards_over_100[-100:])
+                if result >= 200:
+                    self.checkpoint('solved_200.pth')
+                    print("\n")
+                    print(f"Enviroment solved in {episode} episodes!")
+                    is_finished = True
+                    break
+                else:
+                    print(f"Enviroment not solved yet! Average score over 100: {result}\n")
+                    
+
+            rewards.append(score)
+            if is_finished == True:
+                break            
+            result = np.mean(rewards[-100:])
             if episode % 100 == 0 and episode != 0: 
-                print(f"Average score in episode {episode} is: {is_solved}")
+                print(f"Average score in episode {episode} is: {result}")
         
         return rewards

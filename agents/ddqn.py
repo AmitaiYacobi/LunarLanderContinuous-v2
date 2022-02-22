@@ -104,6 +104,7 @@ class DDQNAgent:
                     break
             
             if score >= 200:
+                print("\n")
                 print("################################################################")
                 print("Current score is 200! let's try 100 episodes to see if we are done!")
                 print("################################################################")
@@ -121,15 +122,16 @@ class DDQNAgent:
                             print(f"Episode: {e}/100, score: {temp_score}", end="\r")
                             break
                     rewards_over_100.append(temp_score)
-                    result = np.mean(rewards_over_100[-100:])
-                    if result >= 200:
-                        self.checkpoint('solved_200.pth')
-                        print("\n")
-                        print(f"Enviroment solved in {episode} episodes!")
-                        is_finished = True
-                        break
-                    
 
+                result = np.mean(rewards_over_100)
+                if result >= 200:
+                    self.checkpoint('solved_200.pth')
+                    print("\n")
+                    print(f"Enviroment solved in {episode} episodes!")
+                    is_finished = True
+                else:
+                    print(f"Enviroment not solved yet! Average score over 100: {result}")
+                    
             rewards.append(score)
             if is_finished == True:
                 break            
@@ -138,7 +140,6 @@ class DDQNAgent:
                 print(f"Average score in episode {episode} is: {result}")
         
         return rewards
-
 
 
 

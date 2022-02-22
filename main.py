@@ -36,6 +36,7 @@ if __name__ == "__main__":
   state_size = env.observation_space.shape[0]
   action_size = len(discrete_actions)
 
+  print(args.agent)
   if args.agent == "sarsa":
     agent = algorithms_dictionary[args.agent]()
   else:

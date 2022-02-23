@@ -12,6 +12,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 """ This implementation of Target DQN algorithm uses replay memory and epsilon greedy selection method """
 
+
 class TargetDQNAgent:
     def __init__(self, state_size, action_size, seed):
         self.state_size = state_size
@@ -98,7 +99,7 @@ class TargetDQNAgent:
             score = 0
             max_steps = 3000
             for _ in range(max_steps):
-                action = self.act(state) # returns index of an action
+                action = self.act(state)  # returns index of an action
                 next_state, reward, done, _ = env.step(discrete_actions[action])
                 env.render()
                 self.step(state, action, reward, next_state, done)
@@ -107,7 +108,7 @@ class TargetDQNAgent:
                 if done:
                     print(f"Episode: {episode}/{num_of_episodes}, score: {score}", end="\r")
                     break
-            
+
             if score >= 200:
                 print("\n")
                 print("################################################################")
@@ -118,13 +119,13 @@ class TargetDQNAgent:
                     state = env.reset()
                     temp_score = 0
                     for _ in range(max_steps):
-                        action = self.act(state) # returns index of an action
+                        action = self.act(state)  # returns index of an action
                         next_state, reward, done, _ = env.step(discrete_actions[action])
                         env.render()
                         state = next_state
                         temp_score += reward
                         if done:
-                            print(f"Episode: {e}/100, score: {temp_score}", end="\r")
+                            print(f"Episode: {e}/100, score: {temp_score}")
                             break
                     rewards_over_100.append(temp_score)
 
@@ -136,12 +137,12 @@ class TargetDQNAgent:
                     is_finished = True
                 else:
                     print(f"Enviroment not solved yet! Average score over 100: {result}\n")
-                    
+
             rewards.append(score)
             if is_finished == True:
-                break            
+                break
             result = np.mean(rewards[-100:])
-            if episode % 100 == 0 and episode != 0: 
+            if episode % 100 == 0 and episode != 0:
                 print(f"Average score in episode {episode} is: {result}")
-        
+
         return rewards

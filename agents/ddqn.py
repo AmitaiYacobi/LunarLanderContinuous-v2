@@ -95,14 +95,15 @@ class DDQNAgent:
             for _ in range(max_steps):
                 action = self.act(state) # returns index of an action
                 next_state, reward, done, _ = env.step(discrete_actions[action])
-                env.render()
+                # env.render()
                 self.step(state, action, reward, next_state, done)
                 state = next_state
                 score += reward
                 if done:
                     print(f"Episode: {episode}/{num_of_episodes}, score: {score}", end="\r")
                     break
-            
+
+            print(f"Episode: {episode}, score: {score}")
             if score >= 200:
                 print("\n")
                 print("################################################################")
@@ -115,7 +116,7 @@ class DDQNAgent:
                     for _ in range(max_steps):
                         action = self.act(state) # returns index of an action
                         next_state, reward, done, _ = env.step(discrete_actions[action])
-                        env.render()
+                        # env.render()
                         state = next_state
                         temp_score += reward
                         if done:

@@ -1,20 +1,17 @@
-import gym
 import argparse
-import matplotlib.pyplot as plt
 
-
-from utils import *
 from agents.dqn import *
 from agents.ddqn import *
 from agents.sarsa import *
-from discritization import *
 from agents.targetdqn import *
+from agents.tdqn_vdiff import *
 
 algorithms_dictionary = {
   "sarsa": SARSAgent,
   "dqn": DQNAgent,
   "targetdqn": TargetDQNAgent,
   "ddqn": DDQNAgent,
+  "tdqn_vdiff" : TDQNVD_Agent
 }
 
 def add_arguments_options(parser):
@@ -32,13 +29,15 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   env = gym.make("LunarLanderContinuous-v2")
-  env = wrap_env(env)
+  # env = wrap_env(env)
   state_size = env.observation_space.shape[0]
   action_size = len(discrete_actions)
 
   print(args.agent)
   if args.agent == "sarsa":
     agent = algorithms_dictionary[args.agent]()
+  elif args.agent == "tdqn_nv":
+    agent = algorithms_dictionary[args.agent](state_size - 2, action_size, 0)
   else:
     agent = algorithms_dictionary[args.agent](state_size, action_size, 0)
 

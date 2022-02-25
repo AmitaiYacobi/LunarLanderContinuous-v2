@@ -103,7 +103,7 @@ class DDQNAgent:
                     print(f"Episode: {episode}/{num_of_episodes}, score: {score}", end="\r")
                     break
 
-            print(f"Episode: {episode}, score: {score}")
+            # print(f"Episode: {episode}, score: {score}")
             if score >= 200:
                 print("\n")
                 print("################################################################")

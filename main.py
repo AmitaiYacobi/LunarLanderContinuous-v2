@@ -4,28 +4,25 @@ from agents.dqn import *
 from agents.ddqn import *
 from agents.sarsa import *
 from agents.targetdqn import *
-from agents.tdqn_vdiff import *
+# from agents.tdqn_vdiff import *
 
 algorithms_dictionary = {
   "sarsa": SARSAgent,
   "dqn": DQNAgent,
   "targetdqn": TargetDQNAgent,
   "ddqn": DDQNAgent,
-  "tdqn_vdiff" : TDQNVD_Agent
+  # "tdqn_vdiff" : TDQNVD_Agent
 }
 
-def add_arguments_options(parser):
+
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser()
   parser.add_argument(
     "agent",
     type=str,
     help="List of optional agents you can choose",
     choices = [i for i in algorithms_dictionary],
   )
-
-
-if __name__ == "__main__":
-  parser = argparse.ArgumentParser()
-  add_arguments_options(parser)
   args = parser.parse_args()
 
   env = gym.make("LunarLanderContinuous-v2")

@@ -4,14 +4,14 @@ from agents.dqn import *
 from agents.ddqn import *
 from agents.sarsa import *
 from agents.targetdqn import *
-# from agents.tdqn_vdiff import *
+from agents.tdqn_vdiff import *
 
 algorithms_dictionary = {
   "sarsa": SARSAgent,
   "dqn": DQNAgent,
   "targetdqn": TargetDQNAgent,
   "ddqn": DDQNAgent,
-  # "tdqn_vdiff" : TDQNVD_Agent
+  "tdqn_vdiff" : TDQNVD_Agent
 }
 
 

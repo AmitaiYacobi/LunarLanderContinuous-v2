@@ -38,7 +38,7 @@ if __name__ == "__main__":
   else:
     agent = algorithms_dictionary[args.agent](state_size, action_size, 0)
 
-  rewards = agent.solve(env, 1000)
+  rewards = agent.solve(env)
 
   plt.title(args.agent.upper())
   plt.xlabel("Episodes")
